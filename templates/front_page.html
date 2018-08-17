@@ -1,0 +1,87 @@
+<a href='/logout'>Logout</a>
+<h1><center>W.M. Keck Center for 3D Innovation Database</center></h1>
+<html> 
+<div class="container">
+  <form  action="" method="post" role="form">
+    {{ form.csrf }}
+    <script>
+  	(function() {
+    var cx = '014708723342938605049:vpog3_lowlk';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  	})();
+	</script>
+	<gcse:searchbox-only></gcse:searchbox-only>
+
+      <label for="pedigree">Pedigree:</label>
+      <select class="form-control" id="pedigree" name="pedigree">
+      	{% for o in ped_list %}
+      		<option name="{{o}}" SELECTED>{{o}}</option>
+      	{% endfor %}
+      </select>
+
+      <label for="fabrication">Fabrication:</label>
+      <select class="form-control" id="fabrication" name="fabrication">
+      	{% for o in fab_list %}
+      		<option name="{{o}}" SELECTED>{{o}} </option>
+      	{% endfor %}
+      </select>
+
+      <label for="post_processing">Post-Processing:</label>
+      <select class="form-control" id="post_processing" name="post_processing">
+      	{% for o in post_list %}
+      		<option name="{{o}}" SELECTED>{{o}} </option>
+      	{% endfor %}
+      </select>
+
+      <label for="testing">Testing:</label>
+      <select class="testing" id="testing" name="testing">
+      	{% for o in test_list %}
+      		<option name="{{o}}" SELECTED>{{o}} </option>
+      	{% endfor %}
+      </select>
+      <button type="submit" class="btn btn-success">Search</button>
+  </form>
+ 
+  <br>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+ 
+        {% for message in messages %}
+            {% if "Error" not in message[1]: %}
+                <div class="alert alert-info">
+                <strong>Success! </strong> {{ message[1] }}
+                </div>
+            {% endif %}
+ 
+            {% if "Error" in message[1]: %}
+                <div class="alert alert-warning">
+                {{ message[1] }}
+                </div>
+            {% endif %}
+        {% endfor %}
+            {% endif %}
+        {% endwith %}
+ 
+</div>
+<div class="main-content">
+  Results will be shown down below.
+  <gcse:searchresults></gcse:searchresults>
+</div>
+<br>            
+</div>
+</div>
+</body>
+</html>
+
+<!--
+<div class="main-content">
+  Results will be shown down below
+  <gcse:searchresults></gcse:searchresults>
+</div>
+-->
+
