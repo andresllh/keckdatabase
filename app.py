@@ -6,7 +6,7 @@ from sqlalchemy.orm import sessionmaker
 from tabledef import *
 from dropdown_tables import *
 
-dropdowns = create_engine('sqlite:///dropdowns.db', echo=True) ###
+dropdowns = create_engine('sqlite:///dropdowns.db', echo=True) 
 
 DEBUG = True
 app = Flask(__name__)
@@ -26,7 +26,7 @@ def home():
     if not session.get('logged_in'):
         return render_template('login.html')
     else:
-    	return redirect('http://localhost:4000/search')
+        return redirect('http://localhost:4000/search')
  
 @app.route('/login', methods=['POST'])
 def do_admin_login():
@@ -51,15 +51,23 @@ def logout():
 
 
 @app.route('/search', methods=['GET', 'POST'])
+
+
 def search():
     form = ReusableForm(request.form)
     Session = sessionmaker(bind=dropdowns)
     a = Session()
 
-    ped_opts = a.query(Drop_ped.ped)
-    fab_opts = a.query(Drop_fab.fab)
-    post_opts = a.query(Drop_post.post)
-    test_opts = a.query(Drop_test.test)
+    ped_opts_q = a.query(Drop_ped.ped)
+    fab_opts_q = a.query(Drop_fab.fab)
+    post_opts_q = a.query(Drop_post.post)
+    test_opts_q = a.query(Drop_test.test)
+
+    ped_opts = convert_str(ped_opts_q)
+    fab_opts = convert_str(fab_opts_q)
+    post_opts = convert_str(post_opts_q)
+    test_opts = convert_str(test_opts_q)
+
  
     print (form.errors)
     if request.method == 'POST':

@@ -6,6 +6,15 @@ from sqlalchemy.orm import relationship, backref
  
 engine = create_engine('sqlite:///dropdowns.db', echo=True)
 Base = declarative_base()
+
+
+def convert_str(query):
+    result = []
+    for item in query:
+        item = str(item)
+        result.append(item.strip(")").strip("(").strip(",").strip("'"))
+
+    return result
  
 ########################################################################
 class Drop_test(Base):
