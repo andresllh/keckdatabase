@@ -14,7 +14,7 @@ def convert_str(query):
         item = str(item)
         result.append(item.strip(")").strip("(").strip(",").strip("'"))
 
-    return result
+    return sorted(result)
  
 ########################################################################
 class Drop_test(Base):

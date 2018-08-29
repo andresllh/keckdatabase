@@ -6,8 +6,10 @@ box-sizing: border-box;
 	outline: none;
 }
 body {
-font-family: Arial;
-background-color: #3498DB;
+background-image: url("keck_logo.jpg");
+background-size: contain;
+background-repeat: no-repeat;
+background-position: center center;
 padding: 50px;
 }
 .login {
