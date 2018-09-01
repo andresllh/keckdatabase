@@ -1,5 +1,3 @@
-# keckdatabase - in development
-
 # The database for the W.M. Keck Center for 3D Innovation is under development.
 
 # Installation for local development
