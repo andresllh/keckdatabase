@@ -19,5 +19,9 @@ After all files are in a folder, navigate to that folder in your command prompt 
 the command "py app.py" or "python app.py" depending on which one utilizes python 3. Once the server
 is running, open up a browser and navigate to "localhost:4000" to view it.
 
+## How to add more dropdown options
+There is an excel file called dropdowns.xls, which contains all the filtering dropdown options
+that are listed in the search page. To add more options, simply modify this file by adding the 
+option directly underneath the column where you want it to be displayed.
 
 ### Developed for the W.M. Keck Center by Andres Llausas
