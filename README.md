@@ -24,5 +24,4 @@ There is an excel file called dropdowns.xls, which contains all the filtering dr
 that are listed in the search page. To add more options, simply modify this file by adding the 
 option directly underneath the column where you want it to be displayed.
 
-
 ### Developed for the W.M. Keck Center by Andres Llausas
