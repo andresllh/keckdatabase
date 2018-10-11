@@ -1,0 +1,45 @@
+session {7/6 1:03:26pm > Yaskawa opened job C:/ProgramData/Stratasys/FDMControlCenter/11.1/jobs/Yaskawa54a584473e8f515133239cd7/Default.sjb.  Insight 11.1 (4870).}
+msg {1:03:27pm > Read 92 facets in 0:00 from "E:/ASTM638.STL"}
+msg {1:03:27pm > STL comment: solid ASTM638}
+msg {1:03:27pm > 12 free surface edges left in model (object is not closed).}
+msg {1:03:27pm > Bounding box of this STL X, Y, Z:}
+msg {1:03:27pm >       min = (0.0000, 0.0000, 0.0000)}
+msg {1:03:27pm >       max = (165.0000, 7.0000, 19.0000)}
+msg {1:03:27pm > Done loading STL file after 1 sec.}
+msg {1:03:34pm > 	Slice height:	0.0100}
+msg {1:03:35pm > Done slicing after 1 sec.}
+msg {1:04:01pm > Supports removed}
+msg {1:04:01pm > 	Support style:	Sparse}
+msg {1:04:02pm > Inspecting part curves}
+msg {1:04:02pm > Generating supports}
+msg {1:04:02pm > Done generating supports after 1 sec.}
+msg {1:04:11pm > 	Part fill style:	One contour /  rasters}
+msg {1:04:11pm > 	Part interior style:	Solid}
+msg {1:04:11pm > 	Contour width:	0.0200}
+msg {1:04:11pm > 	Part raster width:	0.0200}
+msg {1:04:13pm > Done generating toolpaths after 2 sec.}
+msg {1:06:41pm > Done writing boundary curves after 5 sec.}
+msg {1:06:42pm > CMB moved to envelope center.}
+msg {1:06:43pm > Toolpath Information}
+msg {1:06:43pm > 	Est. build time:	49 min }
+msg {1:06:43pm > 	Model material:	1.150 in³}
+msg {1:06:43pm > 	Support material:	0.126 in³}
+msg {1:06:43pm > Done writing CMB file after 2 sec.}
+msg {1:06:43pm > Job Summary}
+msg {1:06:43pm > 	Full job path:	E:/ssys_ASTM638/ASTM638.sjb}
+msg {1:06:43pm > 	Toolpath file name:	ASTM638.cmb}
+msg {1:06:43pm > 	Modeler:		Fortus 400mc Large}
+msg {1:06:43pm > 	Est. build time:	49 min }
+msg {1:06:43pm > 	Model material:	1.150 in³,	T14,	ULTEM 1010 CG}
+msg {1:06:43pm > 	Support material:	0.126 in³,	T16,	ULTEM 1010 support}
+msg {1:06:43pm > 	Slice height:	0.0100}
+msg {1:06:43pm > 	Part fill style:	One contour /  rasters}
+msg {1:06:43pm > 	Part interior style:	Solid}
+msg {1:06:43pm > 	Visible surface style:	Normal}
+msg {1:06:43pm > 	Support style:	Sparse}
+msg {1:06:43pm > 	Contour width:	0.0200}
+msg {1:06:43pm > 	Number of contours:	0.2500}
+msg {1:06:43pm > 	Part interior contours:	0.0220}
+msg {1:06:43pm > 	Part raster width:	0.0200}
+msg {1:06:43pm > 	Application:	Insight 11.1, Build version: 4870}
+msg {1:06:43pm > Saved job:  E:/ssys_ASTM638/ASTM638.sjb,  approximate build time 49 min }

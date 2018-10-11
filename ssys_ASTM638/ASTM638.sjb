@@ -1,0 +1,6 @@
+# Product version 11.1
+# Build version 4870
+setVersionVar currentJobCore "ASTM638";
+setVersionVar stlDirectory "E:/";
+setVersionVar stlPath "E:/ASTM638.STL";
+setVersionVar toolpathFile "ASTM638.cmb";
