@@ -1,0 +1,24 @@
+Graphics System Information:
+	Vendor     : Microsoft Corporation
+	Renderer   : GDI Generic
+	Version    : 1.1.0
+	Extensions : GL_WIN_swap_hint GL_EXT_bgra GL_EXT_paletted_texture
+	Resolution : 1920x1080
+	Color Depth: 32
+	Depth Bits : 16
+	Double-buffering enabled
+	Using pixel format 4 from:
+ 1: 32 bit   RGBA, 32 bit Depth, single buffer,              No swap,      No accel, Main plane
+ 2: 32 bit   RGBA, 16 bit Depth, single buffer,              No swap,      No accel, Main plane
+ 3: 32 bit   RGBA, 32 bit Depth, double buffer,            Copy swap,      No accel, Main plane
+ 4: 32 bit   RGBA, 16 bit Depth, double buffer,            Copy swap,      No accel, Main plane
+ 5: 32 bit   RGBA, 32 bit Depth, single buffer,              No swap,      No accel, Main plane
+ 6: 32 bit   RGBA, 16 bit Depth, single buffer,              No swap,      No accel, Main plane
+ 7: 32 bit   RGBA, 32 bit Depth, double buffer,            Copy swap,      No accel, Main plane
+ 8: 32 bit   RGBA, 16 bit Depth, double buffer,            Copy swap,      No accel, Main plane
+ 9: 32 bit CIndex, 32 bit Depth, single buffer,              No swap,      No accel, Main plane
+10: 32 bit CIndex, 16 bit Depth, single buffer,              No swap,      No accel, Main plane
+11: 32 bit CIndex, 32 bit Depth, double buffer,            Copy swap,      No accel, Main plane
+12: 32 bit CIndex, 16 bit Depth, double buffer,            Copy swap,      No accel, Main plane
+	GL Shading Language support : unknown keyword
+	Graphics Shader Messages: Graphics driver or User has chosen compatibility mode OpenGL. Cannot use shaders.
