@@ -9,14 +9,14 @@ engine = create_engine('sqlite:///dropdowns.db', echo=True)
 Session = sessionmaker(bind=engine)
 session = Session()
  
-user = User("admin","password")
+user = User("admin","password", True)
 session.add(user)
  
-user = User("jlcoronel", "password")
+user = User("normal", "password", False)
 session.add(user)
 
 
-data = pd.read_excel('dropdowns.xlsx')
+data = pd.read_csv('dropdowns.csv')
 
 
 ped_data = data['Pedigree']

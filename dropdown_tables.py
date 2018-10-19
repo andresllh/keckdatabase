@@ -73,12 +73,14 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     username = Column(String)
     password = Column(String)
+    admin = Column(BOOLEAN)
  
     #----------------------------------------------------------------------
-    def __init__(self, username, password):
+    def __init__(self, username, password, admin):
         """"""
         self.username = username
         self.password = password
+        self.admin = admin
  
 # create tables
 Base.metadata.create_all(engine)
