@@ -1,0 +1,102 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+{% block body %}
+{% if session['logged_in'] %}
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="/static/style.css" type="text/css">
+<a href='/logout'>Logout</a>
+<h1><center>W.M. Keck Center for 3D Innovation Database</center></h1>
+<html>
+
+<div class="tab">
+        <button class="tablinks" onclick="openTab(event, 'Search')">Search</button>
+        <button class="tablinks" onclick="openTab(event, 'Add Data')">Add Data</button>
+</div>
+      <div id="Search" class="tabcontent">
+        <h3>Search</h3>
+        <p>Admin Search Page</p>
+        <div class="container">
+                <body> 
+                  {% from "_formhelpers.html" import render_field %}
+                <form method="post">
+                  <dl> 
+                      {{ render_field(form.search) }}
+                      <table width="100%" cellspacing="0" cellpadding="0" border="0">
+                          <colgroup>
+                            <col width="25%">
+                            <col width="25%">
+                            <col width="25%">
+                            <col width="25%">
+                          </colgroup>
+                          <tr>
+                            <td>
+                                {{ render_field(form.pedigree) }}
+                            </td>
+                            <td>
+                                {{ render_field(form.fabrication) }}
+                            </td>
+                            <td>
+                                {{ render_field(form.post_processing) }}
+                            </td>
+                            <td>
+                                {{ render_field(form.testing) }}
+                            </td>
+                            </tr>
+                          </table>
+                  </dl>
+                  <button type="submit" class="btn btn-success" style="float:right; margin:20px">Search</button>
+                </form>
+            </body>
+        </div>
+      </div>
+      
+      <div id="Add Data" class="tabcontent">
+        <h3>Add Data</h3>
+        <p>Admin Add Data Page</p> 
+      </div>
+      <script>
+            function openTab(evt, tabName) {
+                var i, tabcontent, tablinks;
+                tabcontent = document.getElementsByClassName("tabcontent");
+                for (i = 0; i < tabcontent.length; i++) {
+                    tabcontent[i].style.display = "none";
+                }
+                tablinks = document.getElementsByClassName("tablinks");
+                for (i = 0; i < tablinks.length; i++) {
+                    tablinks[i].className = tablinks[i].className.replace(" active", "");
+                }
+                document.getElementById(tabName).style.display = "block";
+                evt.currentTarget.className += " active";
+            }
+        </script>
+        <script>
+            document.getElementById("Search").click();
+        </script>
+
+      <br>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+
+      {% for message in messages %}
+          {% if "Error" not in message[1]: %}
+              <div class="alert alert-info">
+              <strong>Success! </strong> {{ message[1] }}
+              </div>
+          {% endif %}
+
+          {% if "Error" in message[1]: %}
+              <div class="alert alert-warning">
+              {{ message[1] }}
+              </div>
+          {% endif %}
+      {% endfor %}
+          {% endif %}
+      {% endwith %}
+</body>
+</div>
+<br>            
+
+</html>
+{% else %}
+<p>You don't have access to this page! Go Back.</p>
+{% endif %}
+{% endblock %}

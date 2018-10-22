@@ -9,55 +9,36 @@
 
 <div class="container">
   <body> 
-  <form  action="" method="post" role="form">
-    {{ form.csrf }}
-    <script>
-  	(function() {
-    var cx = '014708723342938605049:vpog3_lowlk';
-    var gcse = document.createElement('script');
-    gcse.type = 'text/javascript';
-    gcse.async = true;
-    gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
-    var s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(gcse, s);
-  	})();
-	</script>
-	<gcse:search></gcse:search>
+      {% from "_formhelpers.html" import render_field %}
+      <form method="post">
+        <dl> 
+            {{ render_field(form.search) }}
+            <table width="100%" cellspacing="0" cellpadding="0" border="0">
+                <colgroup>
+                  <col width="25%">
+                  <col width="25%">
+                  <col width="25%">
+                  <col width="25%">
+                </colgroup>
+                <tr>
+                  <td>
+                      {{ render_field(form.pedigree) }}
+                  </td>
+                  <td>
+                      {{ render_field(form.fabrication) }}
+                  </td>
+                  <td>
+                      {{ render_field(form.post_processing) }}
+                  </td>
+                  <td>
+                      {{ render_field(form.testing) }}
+                  </td>
+                  </tr>
+                </table>
+        </dl>
+        <button type="submit" class="btn btn-success" style="float:right; margin:20px">Search</button>
+      </form>
 
-      <label for="pedigree">Pedigree:</label>
-      <select class="form-control" id="pedigree" name="pedigree">
-      	{% for o in ped_list %}
-      		<option name="{{o}}">{{o}}</option>
-      	{% endfor %}
-        <option name="empty" SELECTED>N/A</option>
-      </select>
-
-      <label for="fabrication">Fabrication:</label>
-      <select class="form-control" id="fabrication" name="fabrication">
-      	{% for o in fab_list %}
-      		<option name="{{o}}">{{o}} </option>
-      	{% endfor %}
-        <option name="empty" SELECTED>N/A</option>
-      </select>
-
-      <label for="post_processing">Post-Processing:</label>
-      <select class="form-control" id="post_processing" name="post_processing">
-      	{% for o in post_list %}
-      		<option name="{{o}}">{{o}} </option>
-      	{% endfor %}
-        <option name="empty" SELECTED>N/A</option>
-      </select>
-
-      <label for="testing">Testing:</label>
-      <select class="form-control" id="testing" name="testing">
-      	{% for o in test_list %}
-      		<option name="{{o}}">{{o}} </option>
-      	{% endfor %}
-        <option name="empty" SELECTED>N/A</option>
-      </select>
-      <button type="submit" class="btn btn-success" style="float:right; margin:20px">Search</button>
-  </form>
- 
   <br>
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
