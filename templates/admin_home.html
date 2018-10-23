@@ -8,8 +8,8 @@
 <html>
 
 <div class="tab">
-        <button class="tablinks" onclick="openTab(event, 'Search')">Search</button>
-        <button class="tablinks" onclick="openTab(event, 'Add Data')">Add Data</button>
+        <button class="tablinks" onclick="openPage('Search', this)" id="defaultOpen">Search</button>
+        <button class="tablinks" onclick="openPage('Add-Data', this)">Add Data</button>
 </div>
       <div id="Search" class="tabcontent">
         <h3>Search</h3>
@@ -19,13 +19,17 @@
                   {% from "_formhelpers.html" import render_field %}
                 <form method="post">
                   <dl> 
-                      {{ render_field(form.search) }}
+                    <div class="searchbar">
+                        {{ render_field(form.search) }}
+                    </div>
+                      
                       <table width="100%" cellspacing="0" cellpadding="0" border="0">
                           <colgroup>
-                            <col width="25%">
-                            <col width="25%">
-                            <col width="25%">
-                            <col width="25%">
+                            <col width="20%">
+                            <col width="20%">
+                            <col width="20%">
+                            <col width="20%">
+                            <col width="20%">
                           </colgroup>
                           <tr>
                             <td>
@@ -40,36 +44,43 @@
                             <td>
                                 {{ render_field(form.testing) }}
                             </td>
+                            <td>
+                                <button type="submit" class="btn btn-success" style="float:right; margin:20px">Search</button>
+                            </td>
                             </tr>
                           </table>
                   </dl>
-                  <button type="submit" class="btn btn-success" style="float:right; margin:20px">Search</button>
                 </form>
             </body>
         </div>
       </div>
       
-      <div id="Add Data" class="tabcontent">
+      <div id="Add-Data" class="tabcontent">
         <h3>Add Data</h3>
         <p>Admin Add Data Page</p> 
       </div>
       <script>
-            function openTab(evt, tabName) {
-                var i, tabcontent, tablinks;
-                tabcontent = document.getElementsByClassName("tabcontent");
-                for (i = 0; i < tabcontent.length; i++) {
-                    tabcontent[i].style.display = "none";
-                }
-                tablinks = document.getElementsByClassName("tablinks");
-                for (i = 0; i < tablinks.length; i++) {
-                    tablinks[i].className = tablinks[i].className.replace(" active", "");
-                }
-                document.getElementById(tabName).style.display = "block";
-                evt.currentTarget.className += " active";
+          function openPage(pageName, elmnt) {
+            // Hide all elements with class="tabcontent" by default */
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
             }
-        </script>
-        <script>
-            document.getElementById("Search").click();
+
+            // Remove the background color of all tablinks/buttons
+            tablinks = document.getElementsByClassName("tablink");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].style.backgroundColor = "";
+            }
+
+            // Show the specific tab content
+            document.getElementById(pageName).style.display = "block";
+
+          }
+
+        // Get the element with id="defaultOpen" and click on it
+        document.getElementById("defaultOpen").click();
         </script>
 
       <br>
@@ -79,7 +90,7 @@
       {% for message in messages %}
           {% if "Error" not in message[1]: %}
               <div class="alert alert-info">
-              <strong>Success! </strong> {{ message[1] }}
+              <strong></strong> {{ message[1] }}
               </div>
           {% endif %}
 

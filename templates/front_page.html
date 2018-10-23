@@ -15,10 +15,11 @@
             {{ render_field(form.search) }}
             <table width="100%" cellspacing="0" cellpadding="0" border="0">
                 <colgroup>
-                  <col width="25%">
-                  <col width="25%">
-                  <col width="25%">
-                  <col width="25%">
+                  <col width="20%">
+                  <col width="20%">
+                  <col width="20%">
+                  <col width="20%">
+                  <col width="20%">
                 </colgroup>
                 <tr>
                   <td>
@@ -33,10 +34,12 @@
                   <td>
                       {{ render_field(form.testing) }}
                   </td>
+                  <td>
+                    <button type="submit" class="btn btn-success" style="float:right; margin:20px">Search</button>
+                  </td>
                   </tr>
                 </table>
         </dl>
-        <button type="submit" class="btn btn-success" style="float:right; margin:20px">Search</button>
       </form>
 
   <br>
@@ -46,7 +49,7 @@
         {% for message in messages %}
             {% if "Error" not in message[1]: %}
                 <div class="alert alert-info">
-                <strong>Success! </strong> {{ message[1] }}
+                <strong></strong> {{ message[1] }}
                 </div>
             {% endif %}
  

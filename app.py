@@ -5,6 +5,8 @@ import os
 from sqlalchemy.orm import sessionmaker
 from tabledef import *
 from dropdown_tables import *
+from elasticsearch import Elasticsearch
+import os
 
 global admin_logged_on
 dropdowns = create_engine('sqlite:///dropdowns.db', echo=True) 
@@ -12,7 +14,10 @@ dropdowns = create_engine('sqlite:///dropdowns.db', echo=True)
 DEBUG = True
 app = Flask(__name__)
 app.config.from_object(__name__)
+
 app.config['SECRET_KEY'] = '7d441f27d441f27567d441f2b6176a'
+app.elasticsearch = Elasticsearch(['http://localhost:4000'])
+
  
 class ReusableForm(Form):
     Session = sessionmaker(bind=dropdowns)
@@ -73,12 +78,23 @@ def admin_home():
     else:
         search = ReusableForm(request.form)
         if request.method == 'POST':
-            return search_results(search)
+            return search_results_admin(search)
             
         return render_template('admin_home.html', form=search)
 
-@app.route('/results')
-def search_results(search):
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    if not session.get('logged_in'):
+        return home()
+    else:
+        search = ReusableForm(request.form)
+        if request.method == 'POST':
+            return search_results_admin(search)
+            
+    return render_template('front_page.html', form=search)
+
+@app.route('/results_admin')
+def search_results_admin(search):
     results = []
     search_string = search.data['search'] + search.data['pedigree'] + search.data['fabrication'] + search.data['post_processing'] + search.data['testing']
     print(search_string)
@@ -95,6 +111,24 @@ def search_results(search):
         # display results
         return render_template('admin_home.html', results=results)
 
+@app.route('/results')
+def search_results(search):
+    results = []
+    search_string = search.data['search'] + search.data['pedigree'] + search.data['fabrication'] + search.data['post_processing'] + search.data['testing']
+    print(search_string)
+ 
+    if search.data['search'] == '':
+        #qry = a.query(Album)
+        #results = qry.all()
+        pass
+ 
+    if not results:
+        flash('No results found!')
+        return redirect('/search')
+    else:
+        # display results
+        return render_template('front_page.html', results=results)
+
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
@@ -103,35 +137,6 @@ def home():
     else:
         return redirect('http://localhost:4000/search')
 
-
-@app.route('/search', methods=['GET', 'POST'])
-def search():
-    if not session.get('logged_in'):
-        return home()
-    form = ReusableForm(request.form)
-    Session = sessionmaker(bind=dropdowns)
-    a = Session()
-
-    ped_opts_q = a.query(Drop_ped.ped)
-    fab_opts_q = a.query(Drop_fab.fab)
-    post_opts_q = a.query(Drop_post.post)
-    test_opts_q = a.query(Drop_test.test)
-
-    ped_opts = convert_str(ped_opts_q)
-    fab_opts = convert_str(fab_opts_q)
-    post_opts = convert_str(post_opts_q)
-    test_opts = convert_str(test_opts_q)
-
- 
-    print (form.errors)
-    if request.method == 'POST':
-        pedigree=request.form['pedigree']
-        fabrication=request.form['fabrication']
-        post_processing=request.form['post_processing']
-        testing=request.form['testing']
-        print (pedigree, " ", fabrication, " ", post_processing, " ", testing)
-
-    return render_template('front_page.html', form=form, ped_list=ped_opts, fab_list=fab_opts, post_list=post_opts, test_list=test_opts)
 
 
 @app.route('/login', methods=['POST'])
@@ -154,7 +159,6 @@ def login():
         session['logged_in'] = True
         admin_logged_on = False
     else:
-        flash('wrong password!')
         admin_logged_on = False
     return home()
 

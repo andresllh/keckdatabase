@@ -5,6 +5,13 @@ box-sizing: border-box;
 *:focus {
 	outline: none;
 }
+
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial;
+}
+
 body {
 background-image: url("keck_logo.jpg");
 background-size: contain;
@@ -50,7 +57,32 @@ input:focus {
 border: 2px solid #3498DB;
 box-shadow: none;
 }
- 
+
+
+.tablink {
+  background-color: #555;
+  color: white;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  font-size: 17px;
+  width: 25%;
+}
+
+.tablink:hover {
+  background-color: #777;
+}
+
+/* Style the tab content (and add height:100% for full page content) */
+.tabcontent {
+  color: white;
+  display: none;
+  padding: 100px 20px;
+  height: 100%;
+}
+
 .btn {
   border: 2px solid transparent;
   background: #3498DB;
@@ -85,10 +117,12 @@ box-shadow: none;
   background-color: #f1f1f1;
 }
 
-
+.searchbar {
+  float: center;
+  width: 80%;
+}
 /* Style the buttons that are used to open the tab content */
 .tab button {
-  text-align: center;
   float: center;
   border: none;
   outline: none;
