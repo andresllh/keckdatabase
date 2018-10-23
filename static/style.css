@@ -1,5 +1,5 @@
- 
-body, html {
+
+body{
   height: 100%;
   margin: 0;
   font-family: Arial;
@@ -19,33 +19,20 @@ body, html {
   height: 100%;
 }
 
-.btn {
-  border: 2px solid transparent;
-  background: #3498DB;
-  color: #ffffff;
-  font-size: 16px;
-  line-height: 25px;
-  padding: 10px 0;
-  text-decoration: none;
-  text-shadow: none;
-  border-radius: 3px;
-  box-shadow: none;
-  transition: 0.25s;
-  display: block;
-  width: 100px;
-  margin: 0 auto;
+.btn-primary{
+
 }
- 
+
+
 .btn:hover {
   background-color: #2980B9;
 }
- 
+
 
 
 .tab {
   overflow: hidden;
-  border: 1px solid #ccc;
-  background-color: #f1f1f1;
+  text-align: center;
 }
 
 .searchbar {
