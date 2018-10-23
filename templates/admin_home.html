@@ -1,15 +1,17 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-{% block body %}
+    {% block body %}
 {% if session['logged_in'] %}
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<!--
 <link rel="stylesheet" href="/static/style.css" type="text/css">
+-->
 <a href='/logout'>Logout</a>
 <h1><center>W.M. Keck Center for 3D Innovation Database</center></h1>
 <html>
 
 <div class="tab">
-        <button class="tablinks" onclick="openPage('Search', this)" id="defaultOpen">Search</button>
-        <button class="tablinks" onclick="openPage('Add-Data', this)">Add Data</button>
+        <button class="tablink" onclick="openPage('Search', this)" id="defaultOpen">Search</button>
+        <button class="tablink" onclick="openPage('Add-Data', this)">Add Data</button>
 </div>
       <div id="Search" class="tabcontent">
         <h3>Search</h3>
@@ -23,7 +25,7 @@
                         {{ render_field(form.search) }}
                     </div>
                       
-                      <table width="100%" cellspacing="0" cellpadding="0" border="0">
+                      <table width="100%" cellspacing="0" cellpadding="0">
                           <colgroup>
                             <col width="20%">
                             <col width="20%">
@@ -69,10 +71,7 @@
             }
 
             // Remove the background color of all tablinks/buttons
-            tablinks = document.getElementsByClassName("tablink");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].style.backgroundColor = "";
-            }
+            
 
             // Show the specific tab content
             document.getElementById(pageName).style.display = "block";
