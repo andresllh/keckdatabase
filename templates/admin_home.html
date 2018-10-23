@@ -61,6 +61,26 @@
                 </form>
             </body>
         </div>
+        <div>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+  
+        {% for message in messages %}
+            {% if "Error" not in message[1]: %}
+                <div class="alert alert-info">
+                <strong></strong> {{ message[1] }}
+                </div>
+            {% endif %}
+  
+            {% if "Error" in message[1]: %}
+                <div class="alert alert-warning">
+                {{ message[1] }}
+                </div>
+            {% endif %}
+        {% endfor %}
+            {% endif %}
+        {% endwith %}
+        </div>
       </div>
 
       <div id="Add-Data" class="tabcontent">
@@ -89,24 +109,6 @@
         </script>
 
       <br>
-      {% with messages = get_flashed_messages(with_categories=true) %}
-          {% if messages %}
-
-      {% for message in messages %}
-          {% if "Error" not in message[1]: %}
-              <div class="alert alert-info">
-              <strong></strong> {{ message[1] }}
-              </div>
-          {% endif %}
-
-          {% if "Error" in message[1]: %}
-              <div class="alert alert-warning">
-              {{ message[1] }}
-              </div>
-          {% endif %}
-      {% endfor %}
-          {% endif %}
-      {% endwith %}
 </body>
 </div>
 <br>
