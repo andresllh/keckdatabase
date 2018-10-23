@@ -2,7 +2,7 @@
 {% block body %}
 {% if session['logged_in'] %}
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="/static/search.css" type="text/css">
+<link rel="stylesheet" href="/static/style.css" type="text/css">
 <a href='/logout'>Logout</a>
 <h1><center>W.M. Keck Center for 3D Innovation Database</center></h1>
 <html>
@@ -11,8 +11,10 @@
   <body> 
       {% from "_formhelpers.html" import render_field %}
       <form method="post">
-        <dl> 
-            {{ render_field(form.search) }}
+        <dl>
+            <div>
+                {{ render_field(form.search, class="searchbar") }}
+            </div>
             <table width="100%" cellspacing="0" cellpadding="0" border="0">
                 <colgroup>
                   <col width="20%">
