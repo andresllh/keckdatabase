@@ -16,8 +16,7 @@ user = User("normal", "password", False)
 session.add(user)
 
 
-data = pd.read_csv('dropdowns.csv')
-
+data = pd.read_excel('dropdowns.xlsx')
 
 ped_data = data['Pedigree']
 fab_data = data['Fabrication']
@@ -35,6 +34,5 @@ for item in post_data.dropna():
 
 for item in test_data.dropna():
 	session.add(Drop_test(item))
-
 
 session.commit()
