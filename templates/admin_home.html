@@ -62,24 +62,14 @@
             </body>
         </div>
         <div>
-            {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-  
-        {% for message in messages %}
-            {% if "Error" not in message[1]: %}
-                <div class="alert alert-info">
-                <strong></strong> {{ message[1] }}
-                </div>
-            {% endif %}
-  
-            {% if "Error" in message[1]: %}
-                <div class="alert alert-warning">
-                {{ message[1] }}
-                </div>
-            {% endif %}
-        {% endfor %}
-            {% endif %}
-        {% endwith %}
+        {% if results %}
+            {% for doc_id, doc_result in results %}
+                <strong style="color: black">{{ doc_id }}</strong>
+                <div class="alert alert-info"> {{ doc_result }}</div>
+            {% endfor %}
+        {% else %}
+            <div class="alert alert-info">No Results</div>
+        {% endif %}
         </div>
       </div>
 

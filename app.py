@@ -62,7 +62,42 @@ class ReusableForm(Form):
     search = StringField('')
     
     
- 
+def run_query(search):
+    results = []
+    search_command = {
+                    "query": {
+                        "bool": {
+                        "should": [
+                            { "query_string": { "query": search.data['search']}},
+                            { "match": { "pedigree": search.data['pedigree'] }},
+                            { "match": { "fabrication": search.data['fabrication']}},
+                            { "match": { "post_processing": search.data['post_processing']}},
+                            { "match": { "testing": search.data['testing']}}
+                        ]
+                        }
+                    }
+                    }
+    results = es.search(index="database", body=search_command)
+    doc_results = []
+    doc_id = []
+    my_results = {}
+    if results:
+        filters_applied = search.data['pedigree'] + " " +  search.data['fabrication'] + " " + search.data['post_processing'] + " " + search.data['testing']
+        flash("You Searched for: " + search.data['search'] + " with filters: " + filters_applied)
+        print(results)
+        if results['hits']['total'] == 0:
+            flash("No Results")
+        else:
+            display_results = ''
+            flash("Results:")
+            for hit in results['hits']['hits']:
+                doc_id.append('Document id: ' + hit['_id'])
+                for item in hit['_source']:
+                    display_results += item + ": " + hit['_source'][item] + '\n'
+                #flash(str(display_results))
+                print(str(display_results))
+                doc_results.append(display_results)
+            return zip(doc_id, doc_results)
 
 @app.route('/', methods=['GET', 'POST'])
 def admin():
@@ -89,92 +124,22 @@ def search():
     else:
         search = ReusableForm(request.form)
         if request.method == 'POST':
-            return search_results_admin(search)
+            return search_results(search)
             
     return render_template('front_page.html', form=search)
 
 @app.route('/results_admin')
 def search_results_admin(search):
-    results = []
-    search_command = {"query": {
-                        "query_string" : {
-                            "query" : search.data['search']
-                        }
-                    }
-                }
-
-    '''
-    search_command = {"query":{ 
-                        "bool": {
-                            "must": [
-                                {
-                                    "match_phrase": {
-                                        "pedigree": search.data['pedigree']
-                                }
-                                },
-                                {
-                                    "match_phrase": {
-                                        "fabrication": search.data['fabrication']
-                                    }
-                                },
-                                {
-                                    "match_phrase": {
-                                        "post_processing": search.data['post_processing']
-                                    }
-                                },
-                                {
-                                    "match_phrase": {
-                                        "testing": search.data['testing']
-                                    }
-                                }
-                            ]
-                        }
-                    }
-                }
-    '''
-    results = es.search(index="database", body=search_command)
-    
-    if results:
-        
-        flash("You Searched for: " + search.data['search'])
-        if results['hits']['total'] == 0:
-            flash("No Results")
-        else:
-            display_results = ''
-            flash("Results:")
-            for hit in results['hits']['hits']:
-                display_results = 'Document id: ' + hit['_id'] + '\n'
-                for item in hit['_source']:
-                    display_results += item + ": " + hit['_source'][item] + '\n'
-                flash(str(display_results))
-                print(str(display_results))
-        return redirect('/admin_home')
- 
-    if not results:
-        flash('No results found!')
-        return redirect('/admin_home')
+    if admin_logged_on:
+        my_results = run_query(search)
+        return render_template('/admin_home.html', form=search, results=my_results)
     else:
-        # display results
-        return render_template('admin_home.html', results=results)
+        return home()
 
 @app.route('/results')
 def search_results(search):
-    results = []
-    search_string = search.data['search'] + search.data['pedigree'] + search.data['fabrication'] + search.data['post_processing'] + search.data['testing']
-    print(search_string)
- 
-    if search.data['search'] == '':
-        #qry = a.query(Album)
-        #results = qry.all()
-        pass
- 
-    if not results:
-        flash('No results found!')
-        return redirect('/search')
-    else:
-        # display results
-        return render_template('front_page.html', results=results)
-
+    my_results = run_query(search)
+    return render_template('front_page.html', form=search, results=my_results)
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
