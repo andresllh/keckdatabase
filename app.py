@@ -9,6 +9,7 @@ from elasticsearch import Elasticsearch
 import os
 
 global admin_logged_on
+
 dropdowns = create_engine('sqlite:///dropdowns.db', echo=True) 
 
 DEBUG = True
@@ -18,7 +19,6 @@ app.config.from_object(__name__)
 app.config['SECRET_KEY'] = '7d441f27d441f27567d441f2b6176a'
 es = Elasticsearch([{'host': 'localhost', 'port': 10000}])
 
- 
 class ReusableForm(Form):
     Session = sessionmaker(bind=dropdowns)
     a = Session()
@@ -80,11 +80,10 @@ def run_query(search):
     results = es.search(index="database", body=search_command)
     doc_results = []
     doc_id = []
-    my_results = {}
     if results:
         filters_applied = search.data['pedigree'] + " " +  search.data['fabrication'] + " " + search.data['post_processing'] + " " + search.data['testing']
         flash("You Searched for: " + search.data['search'] + " with filters: " + filters_applied)
-        print(results)
+        # print(results)
         if results['hits']['total'] == 0:
             flash("No Results")
         else:
@@ -94,8 +93,8 @@ def run_query(search):
                 doc_id.append('Document id: ' + hit['_id'])
                 for item in hit['_source']:
                     display_results += item + ": " + hit['_source'][item] + '\n'
-                #flash(str(display_results))
-                print(str(display_results))
+                # flash(str(display_results))
+                # print(str(display_results))
                 doc_results.append(display_results)
             return zip(doc_id, doc_results)
 
@@ -132,9 +131,30 @@ def search():
 def search_results_admin(search):
     if admin_logged_on:
         my_results = run_query(search)
-        return render_template('/admin_home.html', form=search, results=my_results)
+        return render_template('admin_home.html', form=search, results=my_results)
     else:
         return home()
+
+@app.route('/Document', methods=['GET', 'POST'])
+def display_document():
+    doc_id = request.args.get('type')
+    doc_id = doc_id.strip("Document id: ")
+    search = {
+                "query": {
+                    "match": {
+                        "_id": doc_id
+                    }
+                }
+            }
+    results = es.search(index='database', body=search)
+    # print(doc_id, results)
+    display_results = []
+    for hit in results['hits']['hits']:
+        for item in hit['_source']:
+            display_results.append(item + ": " + hit['_source'][item] + '\n')
+            # print(item + ": " + hit['_source'][item] + '\n')
+    
+    return render_template('/document.html', results=display_results)
 
 @app.route('/results')
 def search_results(search):

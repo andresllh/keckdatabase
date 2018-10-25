@@ -3,7 +3,7 @@
 {% if session['logged_in'] %}
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="/static/style.css" type="text/css">
-<a href='/logout'>Logout</a>
+<a href='/logout' style="float: right">Logout</a>
 <h1><center>W.M. Keck Center for 3D Innovation Database</center></h1>
 <html>
 
@@ -48,14 +48,14 @@
  </body>
 </div>
 <div>
-    {% if results %}
+        {% if results %}
         {% for doc_id, doc_result in results %}
-            <strong style="color: black">{{ doc_id }}</strong>
+            <strong style="color: black"><a href={{ url_for('display_document', type=doc_id) }}>{{ doc_id }}</a></strong>
             <div class="alert alert-info"> {{ doc_result }}</div>
         {% endfor %}
-        {% else %}
-            <div class="alert alert-info">No Results</div>
-        {% endif %}
+    {% else %}
+        <div class="alert alert-info">No Results</div>
+    {% endif %}
 </div>
 <br>            
 
