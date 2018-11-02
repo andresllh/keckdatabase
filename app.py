@@ -61,7 +61,16 @@ class ReusableForm(Form):
     testing = SelectField('Testing:', choices=test_opts_tuple)
     search = StringField('')
     
-    
+
+def reformat(item):
+    temp = item.replace("_", " ")
+    temp = temp.split(" ")
+    result = ""
+    for word in temp:
+        result += word[0].upper() + word[1::] + " "
+    return result
+
+
 def run_query(search):
     results = []
     search_command = {
@@ -147,14 +156,14 @@ def display_document():
                 }
             }
     results = es.search(index='database', body=search)
-    # print(doc_id, results)
+    items = []
     display_results = []
     for hit in results['hits']['hits']:
         for item in hit['_source']:
-            display_results.append(item + ": " + hit['_source'][item] + '\n')
-            # print(item + ": " + hit['_source'][item] + '\n')
-    
-    return render_template('/document.html', results=display_results)
+            display_results.append(hit['_source'][item] + '\n')
+            items.append(reformat(item))
+            
+    return render_template('/document.html', results=zip(items, display_results), doc_id=doc_id)
 
 @app.route('/results')
 def search_results(search):

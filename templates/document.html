@@ -1,24 +1,42 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 <link rel="stylesheet" href="/static/style.css" type="text/css">
-<a href='/logout' style="float: right">Logout</a>
-<a href='/' style="float: left">Back</a>
+<a href='/logout' style="float: right; color:steelblue">Logout</a>
+<a href='/' style="float: left; color: steelblue">Back</a>
 <h1><center>W.M. Keck Center for 3D Innovation Database</center></h1>
 {% block body %}
 {% if session['logged_in'] %}
 <html>
-
+<body>
 <div class="container">
 <div>
     {% if results %}
-            {% for doc_result in results %}
-                <div class="alert alert-info"> {{ doc_result }}</div>
+    <strong style="text-align: center"><h4 style="color: steelblue">Document: {{ doc_id }}</h4></strong>
+    <table width="40%" cellspacing="0" cellpadding="0">
+            <colgroup>
+              <col width="20%">
+              <col width="20%">
+            </colgroup>
+            <tr>
+                <td><h4><strong>Parameter</strong></h4></td>
+                <td><h4><strong>Value</strong></h4></td>
+            </tr>
+            {% for doc_item, doc_result in results %}
+            <tr>
+                <td>
+                    <p>{{ doc_item }}</p>
+                </td>
+                <td>
+                    <p>{{ doc_result }}</p>
+                </td>
+            </tr>
             {% endfor %}
+    </table>
         {% else %}
-            <div class="alert alert-info">No Results</div>
+            <div class="alert alert-info">An error occurred. The document could not be displayed.</div>
         {% endif %}
 </div>
 </div>          
-
+</body>
 </html>
 {% else %}
 <p>You don't have access to this page! Go Back.</p>
