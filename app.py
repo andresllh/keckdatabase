@@ -7,8 +7,12 @@ from tabledef import *
 from dropdown_tables import *
 from elasticsearch import Elasticsearch
 import os
+'''
+This class contains the main functionality of the web app. It contains the logic and the routing done for the web pages.
+'''
 
-global admin_logged_on
+
+global admin_logged_on # need a more secure way of having admin logon 
 
 dropdowns = create_engine('sqlite:///dropdowns.db', echo=True) 
 
@@ -20,24 +24,32 @@ app.config['SECRET_KEY'] = '7d441f27d441f27567d441f2b6176a'
 es = Elasticsearch([{'host': 'localhost', 'port': 10000}])
 
 class ReusableForm(Form):
+    '''
+    This class binds a form to a session. It also populates the dropdown menus by extracting information from the sqlite database that contains the 
+    tables.
+    '''
     Session = sessionmaker(bind=dropdowns)
     a = Session()
 
+    # run query to obtain all results
     ped_opts_q = a.query(Drop_ped.ped)
     fab_opts_q = a.query(Drop_fab.fab)
     post_opts_q = a.query(Drop_post.post)
     test_opts_q = a.query(Drop_test.test)
-
+    
+    # convert them to str
     ped_opts = convert_str(ped_opts_q)
     fab_opts = convert_str(fab_opts_q)
     post_opts = convert_str(post_opts_q)
     test_opts = convert_str(test_opts_q)
 
+    # the method used to populate the dropdown names needs tuples
     ped_opts_tuple  = []
     fab_opts_tuple = []
     post_opts_tuple = []
     test_opts_tuple =[]
-
+    
+    # filling in the tuples
     for x in ped_opts:
         temp = (x, x)
         ped_opts_tuple.append(temp)
@@ -54,7 +66,7 @@ class ReusableForm(Form):
         temp = (x, x)
         test_opts_tuple.append(temp)
     
-
+    # filling in the web form with the dropdown options and establishing the searchbar field
     pedigree = SelectField('Pedigree:', choices=ped_opts_tuple)
     fabrication = SelectField('Fabrication:', choices=fab_opts_tuple)
     post_processing = SelectField('Post-Processing:', choices=post_opts_tuple)
@@ -63,6 +75,9 @@ class ReusableForm(Form):
     
 
 def reformat(item):
+    '''
+    Due to how the names of the items are stroed on the elastic search engine, we go ahead reformat them to look cleaner. 
+    '''
     temp = item.replace("_", " ")
     temp = temp.split(" ")
     result = ""
@@ -72,6 +87,9 @@ def reformat(item):
 
 
 def run_query(search):
+    '''
+    Pretty self explanitory. Uses the elastic search format to run query on the database. 
+    '''
     results = []
     search_command = {
                     "query": {
@@ -90,8 +108,8 @@ def run_query(search):
     doc_results = []
     doc_id = []
     if results:
-        filters_applied = search.data['pedigree'] + " " +  search.data['fabrication'] + " " + search.data['post_processing'] + " " + search.data['testing']
-        flash("You Searched for: " + search.data['search'] + " with filters: " + filters_applied)
+        #filters_applied = search.data['pedigree'] + " " +  search.data['fabrication'] + " " + search.data['post_processing'] + " " + search.data['testing']
+        #flash("You Searched for: " + search.data['search'] + " with filters: " + filters_applied)
         # print(results)
         if results['hits']['total'] == 0:
             flash("No Results")
@@ -109,21 +127,27 @@ def run_query(search):
 
 @app.route('/', methods=['GET', 'POST'])
 def admin():
+    '''
+    Detects if an admin user requested a log on, if not, it returns you to the login page, else it sends you to the admin home page.
+    '''
     if not session.get('logged_in'):
         return home()
     else:
         return redirect('http://localhost:4000/admin_home')
 
 @app.route('/admin_home', methods=['GET', 'POST'])
+'''
+The admin home page. It loads the admin options with the normal search form as well. 
+'''
 def admin_home():
     if not session.get('logged_in') or not admin_logged_on:
         return home()
     else:
-        search = ReusableForm(request.form)
+        search = ReusableForm(request.form) # uses reusable form object declared above in this file
         if request.method == 'POST':
             return search_results_admin(search)
             
-        return render_template('admin_home.html', form=search)
+        return render_template('admin_home.html', form=search) # you can pass a form to the method render_template to be used in the web app
 
 @app.route('/search', methods=['GET', 'POST'])
 def search():
@@ -148,6 +172,7 @@ def search_results_admin(search):
 def display_document():
     doc_id = request.args.get('type')
     doc_id = doc_id.strip("Document id: ")
+    # runs query to match individual document in order to dsiplay it on its own document page. 
     search = {
                 "query": {
                     "match": {
