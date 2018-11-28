@@ -136,10 +136,10 @@ def admin():
         return redirect('http://localhost:4000/admin_home')
 
 @app.route('/admin_home', methods=['GET', 'POST'])
-'''
-The admin home page. It loads the admin options with the normal search form as well. 
-'''
 def admin_home():
+    '''
+    The admin home page. It loads the admin options with the normal search form as well. 
+    '''
     if not session.get('logged_in') or not admin_logged_on:
         return home()
     else:
